@@ -11,6 +11,7 @@ interface IUser extends Document {
   state: string;
   city: string;
   cart: any[]; // Assuming cart contains the IDs or references to items in the cart
+  verified: true | false;
 }
 
 export default IUser;

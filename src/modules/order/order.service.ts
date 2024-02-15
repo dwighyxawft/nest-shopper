@@ -7,10 +7,25 @@ import { HttpService } from '@nestjs/axios';
 import { UserService } from '../user/user.service';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from '../product/product.service';
+import { NotoficationsService } from '../notofications/notifications.service';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import * as nodemailer from "nodemailer"
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class OrderService {
-  constructor(@InjectModel("Order") private readonly orderModel: Model<IOrder>, private httpService: HttpService, private userService: UserService, private productService: ProductService){}
+  private transporter: nodemailer.Transporter;
+  constructor(@InjectModel("Order") private readonly orderModel: Model<IOrder>, private httpService: HttpService, private userService: UserService, private productService: ProductService, private noteService: NotoficationsService, private eventEmitter: EventEmitter2, private configService: ConfigService){
+    this.transporter = nodemailer.createTransport({
+      host: this.configService.get("MAIL_HOST"), // Your SMTP server host
+      port: this.configService.get("MAIL_PORT"), // Your SMTP server port
+      secure: this.configService.get("MAIL_TCP"), // true for 465, false for other ports
+      auth: {
+        user: this.configService.get("MAIL_AUTH_USER"), // Your SMTP username
+        pass: this.configService.get("MAIL_AUTH_PASS"), // Your SMTP password
+      },
+    })
+  }
   
   public async checkOutOrder(order: CreateOrderDto, id: string) {
     const user = await this.userService.findById(id);
@@ -41,7 +56,7 @@ export class OrderService {
     
         const options = {
           headers: {
-            Authorization: 'Bearer sk_live_58af92d67a993c890713ac20e639ec442169b2ec',
+            Authorization: this.configService.get("PAYSTACK_SECRET"),
             'Content-Type': 'application/json',
           },
         };
@@ -78,14 +93,25 @@ export class OrderService {
     if(order){
       const options = {
         headers: {
-          Authorization: 'Bearer sk_live_58af92d67a993c890713ac20e639ec442169b2ec',
+          Authorization: this.configService.get("PAYSTACK_SECRET"),
         },
       };
       try {
         const response = await firstValueFrom(this.httpService.get(`https://api.paystack.co/transaction/verify/${reference}`,options));
         if (response.data.status && response.data.data.status == "success") {
           if (await this.updateOrderByRef(reference)) {
-            return { message: "Order has been verified successfully" };
+            delete order.paymentStatus;
+            const body = "Your order is ready " + order;
+            await this.noteService.createNotification({body: body, order_id: order._id, product_id: "admin", status: "unread"});
+            order.products.forEach(async (item) => {
+              const product = await this.productService.getProductById(item.productId.toString());
+              if(product && product.quantity < 2){
+                  this.eventEmitter.emit("order created", {product})
+              }
+            })
+            if(await this.transporter.sendMail({from: 'amuoladipupo420@gmail.com', to: order.userEmail, subject: "Order payment successful", text: "Your order has been received." + order})){
+              return { message: "Order has been verified successfully" };
+            }
           }
         } else {
           return { message: "Order verification failed" };

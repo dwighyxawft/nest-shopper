@@ -11,9 +11,14 @@ import { MulterModule } from '@nestjs/platform-express';
 import { CategoryModule } from './modules/category/category.module';
 import { GroupModule } from './modules/group/group.module';
 import { OrderModule } from './modules/order/order.module';
+import { NotoficationsModule } from './modules/notofications/notifications.module';
+import { ComplaintModule } from './modules/complaint/complaint.module';
+import { EventEmitterModule } from '@nestjs/event-emitter';
+import { MongooseModule } from '@nestjs/mongoose';
+import { PassSchema } from './schema/password.schema';
 
 @Module({
-  imports: [UserModule, MongooseConfigModule, AuthModule, CartModule, ProductModule, MulterModule.register({dest: "./uploads"}), CategoryModule, GroupModule, OrderModule, ],
+  imports: [UserModule, MongooseConfigModule, AuthModule, CartModule, ProductModule, MulterModule.register({dest: "./uploads"}), CategoryModule, GroupModule, OrderModule, NotoficationsModule, ComplaintModule, EventEmitterModule.forRoot(), MongooseModule.forFeature([{name: "Pass", schema: PassSchema}])],
   controllers: [AppController],
   providers: [AppService],
 })

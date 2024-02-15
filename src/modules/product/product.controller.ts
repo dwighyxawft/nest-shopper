@@ -5,7 +5,9 @@ import { UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { multerConfig } from 'src/config/multer.config';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { UpdateProductDto } from './dto/updateProduct.dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags("Product")
 @Controller('product')
 export class ProductController {
     constructor(private productService: ProductService){}

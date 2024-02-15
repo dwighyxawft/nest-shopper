@@ -34,6 +34,9 @@ export class User extends Document {
 
   @Prop({ type: [Object], default: [] })
   cart: Array<{ productId: string; quantity: number, price: number, total: number }>;
+
+  @Prop({ required: true, default: false })
+  verified: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
