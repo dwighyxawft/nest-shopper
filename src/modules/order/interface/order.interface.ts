@@ -1,6 +1,6 @@
 // order.interface.ts
 
-import { Document, Types } from 'mongoose';
+import { Date, Document, Types } from 'mongoose';
 
 export interface IOrder extends Document {
   user_id: Types.ObjectId;
@@ -15,4 +15,6 @@ export interface IOrder extends Document {
   reference: string;
   userEmail: string;
   paymentStatus: string;
+  createdAt: Date;
+  updatedAt: Date;
 }

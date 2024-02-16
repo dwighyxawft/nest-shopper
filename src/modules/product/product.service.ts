@@ -40,6 +40,11 @@ export class ProductService {
         }
     }
 
+    public async lowStockedProducts(){
+      const low_stocks = await this.productModel.find({quantity: {$lte: 2}}).exec();
+      return low_stocks;
+    }
+
     public async deleteProductById(id: string){
         return await this.productModel.deleteOne({_id: id}).exec();
     }

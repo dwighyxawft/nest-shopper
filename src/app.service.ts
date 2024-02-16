@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { NotoficationsService } from './modules/notofications/notifications.service';
 import { UserService } from './modules/user/user.service';
 import * as nodemailer from "nodemailer";
 import {v4 as uuidv4} from "uuid"
@@ -11,7 +10,7 @@ import { InjectModel } from '@nestjs/mongoose';
 @Injectable()
 export class AppService {
   private transporter = nodemailer.Transporter;
-  constructor(private noteService: NotoficationsService, private userService: UserService, @InjectModel("Pass") private readonly passModel: Model<IPass>){
+  constructor(private userService: UserService, @InjectModel("Pass") private readonly passModel: Model<IPass>){
     this.transporter = nodemailer.createTransport({
       host: 'smtp-relay.sendinblue.com', // Your SMTP server host
       port: 587, // Your SMTP server port
@@ -24,11 +23,6 @@ export class AppService {
   }
   getHello(): string {
     return 'Hello World!';
-  }
-
-  @OnEvent("order created")
-  async checkProduct(payload){
-    await this.noteService.createNotification({body: "We are running out of this product" + payload.product, order_id: "admin", product_id: payload.product._id, status: "unread"});
   }
 
   public async resetPassword(email: string){

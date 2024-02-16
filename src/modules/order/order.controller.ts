@@ -44,6 +44,11 @@ export class OrderController {
     return this.orderService.getOrdersByStatus("pending");
   }
 
+  @Get("current")
+  public async getCurrentOrders() {
+    return this.orderService.getCurrentCompletedOrders();
+  }
+
   @Get(':id')
   public async getOrderById(@Param('id') id: string) {
     return this.orderService.getOrderById(id);

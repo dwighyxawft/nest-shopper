@@ -120,7 +120,7 @@ export class UserService {
     const checkPin = await this.verifyModel.findOne({uuid: uuid}).exec();
     if(checkPin){
       const pin_length = +checkPin.createdAt + (1000 * 60 * 60 * 6);
-      if(Date.now() <= pin_length){
+      if(Number(Date.now()) <= pin_length){
           if(await this.userModel.updateOne({_id: checkPin.user_id}, {verified: true}).exec()){
             if(await this.verifyModel.deleteOne({user_id: checkPin.user_id}).exec()){
               return {message: "User verification successful. You can now login to your account"}

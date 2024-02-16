@@ -46,4 +46,9 @@ export class ProductController {
     public async getProducts() {
         return this.productService.getProducts()
     }
+
+    @Get("low/stock")
+    public async lowStocks() {
+        return this.productService.lowStockedProducts()
+    }
 }

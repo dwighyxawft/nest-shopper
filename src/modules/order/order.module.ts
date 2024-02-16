@@ -6,7 +6,6 @@ import { OrderSchema } from './schema/order.schema';
 import { HttpModule } from '@nestjs/axios';
 import { UserModule } from '../user/user.module';
 import { ProductModule } from '../product/product.module';
-import { NotoficationsModule } from '../notofications/notifications.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -18,7 +17,7 @@ import { ConfigModule } from '@nestjs/config';
         name: "Order",
         schema: OrderSchema
       }
-    ]), HttpModule, UserModule, ProductModule, NotoficationsModule, ConfigModule
+    ]), HttpModule, UserModule, ProductModule, ConfigModule
   ]
 })
 export class OrderModule {}

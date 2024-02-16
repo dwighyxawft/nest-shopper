@@ -7,15 +7,13 @@ import { HttpService } from '@nestjs/axios';
 import { UserService } from '../user/user.service';
 import { firstValueFrom } from 'rxjs';
 import { ProductService } from '../product/product.service';
-import { NotoficationsService } from '../notofications/notifications.service';
-import { EventEmitter2 } from '@nestjs/event-emitter';
 import * as nodemailer from "nodemailer"
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class OrderService {
   private transporter: nodemailer.Transporter;
-  constructor(@InjectModel("Order") private readonly orderModel: Model<IOrder>, private httpService: HttpService, private userService: UserService, private productService: ProductService, private noteService: NotoficationsService, private eventEmitter: EventEmitter2, private configService: ConfigService){
+  constructor(@InjectModel("Order") private readonly orderModel: Model<IOrder>, private httpService: HttpService, private userService: UserService, private productService: ProductService, private configService: ConfigService){
     this.transporter = nodemailer.createTransport({
       host: this.configService.get("MAIL_HOST"), // Your SMTP server host
       port: this.configService.get("MAIL_PORT"), // Your SMTP server port
@@ -101,14 +99,6 @@ export class OrderService {
         if (response.data.status && response.data.data.status == "success") {
           if (await this.updateOrderByRef(reference)) {
             delete order.paymentStatus;
-            const body = "Your order is ready " + order;
-            await this.noteService.createNotification({body: body, order_id: order._id, product_id: "admin", status: "unread"});
-            order.products.forEach(async (item) => {
-              const product = await this.productService.getProductById(item.productId.toString());
-              if(product && product.quantity < 2){
-                  this.eventEmitter.emit("order created", {product})
-              }
-            })
             if(await this.transporter.sendMail({from: 'amuoladipupo420@gmail.com', to: order.userEmail, subject: "Order payment successful", text: "Your order has been received." + order})){
               return { message: "Order has been verified successfully" };
             }
@@ -166,5 +156,16 @@ export class OrderService {
     if(await this.orderModel.deleteOne({reference: reference}).exec()){
       return {message: "Order deleted successfully"};
     }
+  }
+
+  public async getCurrentCompletedOrders(){
+    const today_set = new Date();
+    today_set.setHours(23,59,59,999);
+    const timestamp_set = today_set.getTime();
+    const today_dawn = new Date();
+    today_dawn.setHours(0,0,0,0);
+    const timestamp_dawn = today_dawn.getTime();
+    const completed_orders = await this.orderModel.find({$and: [{paymentStatus: {$eq: "completed"}}, {$and: [{updatedAt: {$gte: today_dawn}}, {updatedAt: {$lte: today_set}}]}]}).exec();
+    return completed_orders
   }
 }

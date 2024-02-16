@@ -1,7 +1,7 @@
 // order.model.ts
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Date, Document, Schema as MongooseSchema } from 'mongoose';
 
 // Order Item Schema
 @Schema()
@@ -39,7 +39,6 @@ export class Order extends Document {
 
   @Prop({ type: String, enum: ['pending', 'completed'], default: 'pending' })
   paymentStatus: string;
-
   // Add other order-related fields as needed
 }
 

@@ -24,7 +24,7 @@ export class UserController {
     return this.userService.findAll();
   }
 
-  @Get("verify/account/:uuid/:id")
+  @Get("verify/account/:uuid/")
   public async verifyUser(@Param("uuid") uuid: string){
     return this.userService.verifyAccount(uuid);
   }
