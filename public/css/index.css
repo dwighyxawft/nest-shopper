@@ -1,0 +1,76 @@
+@font-face {
+  font-family: epilogue;
+  src: url("../fonts/Epilogue/static/Epilogue-Regular.ttf");
+}
+* {
+  font-family: epilogue;
+}
+nav.navbar a{
+  color: #0D1C0D;
+}
+a.navbar-brand{
+  font-size: 18px;
+  font-weight: bold;
+}
+a.signup{
+  font-size: 20px;
+}
+button.product{
+  background-color: white;
+}
+header div.offcanvas-body{
+  background-color: #0D1C0D;
+}
+header div.offcanvas-body ul{
+  margin-top: 10vh;
+}
+header div.offcanvas-body ul li{
+  list-style: none;
+}
+header div.offcanvas-body ul li a{
+  color: white;
+  text-decoration: none;
+  font-size: 15px;
+}
+div.get_started{
+  height: 480px;
+  background-image: url("../images/general/get_started.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+div.words p.title{
+  font-weight: bold;
+  font-size: 48px;
+}
+div.words p.desc{
+  font-size: 16px;
+}
+div.words a.links:nth-child(1){
+  background: #F59926;
+  color: white;
+  font-weight: bold;
+}
+div.words a.links:nth-child(2){
+  background: #1AE51A;
+  color: #0D1C0D;
+  font-weight: bold;
+}
+div.categories p.title{
+  font-size: 22px;
+  font-weight: bold;
+}
+div.categories div.row p.image_text{
+  font-size: 16px;
+}
+footer a{
+  text-decoration: none;
+  color: #8A7861;
+}
+footer a.footer-links{
+  font-size: 22px;
+}
+footer p.footer-text{
+  color: #8A7861;
+  font-size: 16px;
+}

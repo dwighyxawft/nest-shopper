@@ -1,4 +1,4 @@
-import { Date, Document } from 'mongoose';
+import { Document } from 'mongoose';
 
 interface IVerify extends Document {
   user_id: string

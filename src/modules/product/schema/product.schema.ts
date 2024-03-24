@@ -20,6 +20,18 @@ export class Product extends Document {
   @Prop({ type: String })
   group: string;
 
+  @Prop({ type: String })
+  size: string;
+
+  @Prop({ type: String })
+  origin: string;
+
+  @Prop({ type: String })
+  care: string;
+
+  @Prop({ type: String })
+  material: string;
+
   @Prop({ required: true, type: Number })
   quantity: number;
 

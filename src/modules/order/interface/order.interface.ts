@@ -15,6 +15,11 @@ export interface IOrder extends Document {
   reference: string;
   userEmail: string;
   paymentStatus: string;
+  state: string;
+  city: string;
+  address: string;
+  delivery: boolean;
+  delivered: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

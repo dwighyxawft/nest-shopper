@@ -18,6 +18,7 @@ import { ConfigModule } from '@nestjs/config';
         schema: OrderSchema
       }
     ]), HttpModule, UserModule, ProductModule, ConfigModule
-  ]
+  ],
+  exports: [OrderService]
 })
 export class OrderModule {}

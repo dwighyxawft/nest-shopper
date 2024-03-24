@@ -37,7 +37,19 @@ export class Order extends Document {
   @Prop({ required: true })
   userEmail: string;
 
-  @Prop({ type: String, enum: ['pending', 'completed'], default: 'pending' })
+  @Prop({ default: false })
+  delivery: boolean;
+
+  address: string;
+
+  state: string;
+
+  city: string;
+
+  @Prop({ default: false })
+  delivered: boolean;
+
+  @Prop({ type: String, enum: ['pending', 'completed', "delivered", "failed"], default: 'pending' })
   paymentStatus: string;
   // Add other order-related fields as needed
 }

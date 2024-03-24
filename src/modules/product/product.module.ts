@@ -5,6 +5,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ProductSchema } from './schema/product.schema';
 import { CategoryModule } from '../category/category.module';
 import { GroupModule } from '../group/group.module';
+import { UserService } from '../user/user.service';
+import { UserModule } from '../user/user.module';
 
 @Module({
   controllers: [ProductController],
@@ -14,7 +16,7 @@ import { GroupModule } from '../group/group.module';
       name: "Product",
       schema: ProductSchema
     }
-  ]), GroupModule, CategoryModule],
+  ]), GroupModule, CategoryModule, UserModule],
   exports: [ProductService]
 })
 export class ProductModule {}

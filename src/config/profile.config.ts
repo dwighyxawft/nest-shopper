@@ -3,7 +3,7 @@ import { extname } from 'path';
 
 export const profileConfig = {
     storage: diskStorage({
-      destination: "./uploads/users",
+      destination: "./public/images/users",
       filename: (req, file, callback) => {
         const uniqueSuffix = (Date.now() + "-" + req.user["sub"]);
         const ext = extname(file.originalname);

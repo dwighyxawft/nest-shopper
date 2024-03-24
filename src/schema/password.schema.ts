@@ -11,6 +11,8 @@ export class Pass extends Document {
   @Prop({ required: true, unique: true })
   uuid: string;
 
+  expiry: Date;
+
   createdAt: Date
 
 }

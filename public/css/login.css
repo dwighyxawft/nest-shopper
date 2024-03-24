@@ -1,0 +1,10 @@
+main{
+    min-height: 80vh;
+}
+main center a{
+    color: #1AE51A;
+}
+main button[type="submit"]{
+    background-color: #1AE51A;
+    font-weight: bold;
+}

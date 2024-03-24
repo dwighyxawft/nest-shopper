@@ -41,13 +41,61 @@ export class CartService {
         }
     }
 
-    public async deleteCartItem(id: string, index: number){
+    public async addQuantity(id: string, product: string){
+        const user = await this.userService.findById(id);
+        const checkProduct = await this.productService.getProductById(product);
+        if(checkProduct){
+            const index = user.cart.findIndex((item) => item.productId === product)
+            const quantity = user.cart[index].quantity + 1;
+            if(checkProduct.quantity >= quantity){
+                user.cart[index].quantity += 1;
+                if(await this.userService.updateCart(id, user.cart)){
+                    return {status: true}
+                }
+            }else{
+                return {status: false, message: "Product is out of stock", failed: false};
+            }
+        }else{
+            if(await this.deleteCartItem(user._id, product)){
+                return {message: "Product does not exist", failed: true, status: false};
+            }
+        }
+    }
+
+    public async removeQuantity(id: string, product: string){
+        const user = await this.userService.findById(id);
+        const checkProduct = await this.productService.getProductById(product);
+        if(checkProduct){
+            const index = user.cart.findIndex((item) => item.productId === product)
+            const quantity = user.cart[index].quantity - 1;
+            if(checkProduct.quantity >= quantity){
+                user.cart[index].quantity -= 1;
+                if(await this.userService.updateCart(id, user.cart)){
+                    return {status: true}
+                }
+            }else{
+                return {status: false, message: "Product is out of stock", failed: false};
+            }
+        }else{
+            if(await this.deleteCartItem(user._id, product)){
+                return {message: "Product does not exist", status: false, failed: true};
+            }
+        }
+    }
+
+    public async deleteCartItem(id: string, product: string){
         const user = await this.userService.findById(id);
         if(user){
             if(user.cart.length > 0){
-                user.cart.splice(index, 1);
-                if(await this.userService.updateCart(id, user.cart)){
-                    return {message: "Cart item has been removed", cart: user.cart};
+                const checkProduct = user.cart.find((item) => item.productId === product);
+                if(checkProduct){
+                    const index = user.cart.findIndex((item) => item.productId === product)
+                    user.cart.splice(index, 1);
+                    if(await this.userService.updateCart(id, user.cart)){
+                        return {message: "Cart item has been removed", cart: user.cart, status: true};
+                    }
+                }else{
+                    return {message: "Product is not in the cart", status: false}
                 }
             }else{
                 return {message: "Cart is empty."}

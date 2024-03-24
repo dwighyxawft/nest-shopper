@@ -32,7 +32,7 @@ export class GroupService {
 
   public async getGroupById(id: string){
       try{
-          const group = await this.groupModel.find({_id: id}).exec();
+          const group = await this.groupModel.findOne({_id: id}).exec();
           return group;
       }catch(err){
           throw new HttpException({

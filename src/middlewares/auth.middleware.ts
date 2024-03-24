@@ -6,7 +6,7 @@ import { AuthService } from 'src/modules/auth/auth.service';
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
   constructor(
-    private readonly jwtService: JwtService,
+    private jwtService: JwtService,
     private authService: AuthService,
   ) {}
 
@@ -17,7 +17,7 @@ export class AuthMiddleware implements NestMiddleware {
     if (accessToken) {
       try {
         // Verify the access_token
-        const decodedToken = this.jwtService.verify(accessToken);
+        const decodedToken = await this.jwtService.verify(accessToken);
 
         // Attach user details to the request object
         req.user = decodedToken;

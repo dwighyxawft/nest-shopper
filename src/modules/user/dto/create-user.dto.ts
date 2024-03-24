@@ -42,7 +42,7 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     @Length(3, 255)
-    image: "male.jpg" | "female.jpg";
+    image: "man.jpeg" | "woman.jpeg";
 
     @ApiProperty({
         description: "The residential address of the user for order deliveries",

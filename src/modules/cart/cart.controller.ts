@@ -19,8 +19,19 @@ export class CartController {
         return this.cartService.addToCart(req.user["sub"], cart);
     }
 
-    @Delete("delete/:index")
-    public async deleteCartItem(@Req() req: Request, @Param() index){
-        return this.cartService.deleteCartItem(req.user["sub"], index);
+    @Patch("add/:id")
+    public async addQuantity(@Req() req: Request, @Param("id") product: string){
+        return this.cartService.addQuantity(req.user["sub"], product);
+    }
+
+    @Patch("remove/:id")
+    public async removeQuantity(@Req() req: Request, @Param("id") product: string){
+        return this.cartService.removeQuantity(req.user["sub"], product);
+    }
+
+
+    @Delete("delete/:id")
+    public async deleteCartItem(@Req() req: Request, @Param("id") product: string){
+        return this.cartService.deleteCartItem(req.user["sub"], product);
     }
 }

@@ -47,6 +47,9 @@ export class OrderService {
         order.user_id = user._id;
         order.userEmail = user.email;
         order.total = totalAmount;
+        if(order.delivery){
+          totalAmount += 2500
+        }
         const params = {
           email: user.email,
           amount: totalAmount + "00",
@@ -70,11 +73,11 @@ export class OrderService {
               const newOrder = await new this.orderModel(order);
               if(await newOrder.save()){
                 if(await this.userService.updateCart(id, [])){
-                  return {message: "Cart has been emptied. Order made successfully", response: response.data.data};
+                  return {message: "Cart has been emptied. Order made successfully", response: response.data.data, status: true};
                 }
               }
             }else{
-              return {message: "Payment initialization not successfully"}
+              return {message: "Payment initialization not successfully", status: false}
             }
         } catch (error) {
           console.error(error);
@@ -136,8 +139,8 @@ export class OrderService {
     return order;
   }
 
-  public async getOrdersByStatus(status: "pending" | "completed"){
-    const order = await this.orderModel.find({paymentStatus: status}).exec();
+  public async getOrdersByStatus(user_id: string, status: "pending" | "completed" | "delivered" | "failed"){
+    const order = await this.orderModel.find({$and: [{user_id: {$eq: user_id}}, {paymentStatus: {$eq: status}}]}).exec();
     return order;
   }
 

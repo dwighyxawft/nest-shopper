@@ -1,0 +1,27 @@
+main div#row{
+    min-height: 80vh;
+}
+a.sidebar{
+    text-decoration: none;
+    color: #0D1C0D;
+}
+main div.row div.col-md-4 ul li{
+    list-style: none;
+}
+a.sidebar:hover{
+    background-color: rgba(26, 229, 26, 0.153);
+}
+a.sidebar.active{
+    background-color: rgba(26, 229, 26, 0.153);
+}
+p.product-title{
+    font-weight: bold;
+    font-size: 16px;
+}
+span.product-price{
+    font-weight: lighter;
+    color: #1AE51A;
+}
+.textly{
+    color: #1AE51A;
+}

@@ -51,6 +51,42 @@ export class CreateProductDto{
         description: "The product quantity available in your shop per unit",
         example: 50
     })
+    @IsString()
+    @Length(3, 50)
+    @IsNotEmpty()
+    origin: string
+
+    @ApiProperty({
+        description: "95% Rayon, 5% Spandex",
+        example: 50
+    })
+    @IsString()
+    @Length(3, 50)
+    @IsNotEmpty()
+    material: string
+
+    @ApiProperty({
+        description: "The product country of origin",
+        example: "Nigeria"
+    })
+    @IsString()
+    @Length(3, 50)
+    @IsNotEmpty()
+    care: string
+
+    @ApiProperty({
+        description: "The product care instructions",
+        example: "store in a cool dry place"
+    })
+    @IsString()
+    @Length(3, 50)
+    @IsNotEmpty()
+    size: string
+
+    @ApiProperty({
+        description: "The product size",
+        example: "Medium"
+    })
     @IsNumber()
     @Length(3, 50)
     @IsNotEmpty()

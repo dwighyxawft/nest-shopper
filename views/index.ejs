@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="./js/jquery-3.5.1.min.js"></script>
+    <script src="./js/popper2.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <title>xawft shop | <%= message %></title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <div class="d-flex">
+                <a href="/" class="navbar-brand ms-sm-3 ms-1"><img src="./images/general/logo.png" alt=""> Xawft Shop</a>
+              <button class="navbar-toggler border-0" data-bs-toggle="offcanvas" data-bs-target="#navCanvas"><span class="navbar-toggler-icon"></span></button>
+            </div>
+            <div class="collapse navbar-collapse justify-content-end me-3">
+              <ul class="navbar-nav">
+                  <li class="nav-item px-2"><a href="" class="nav-link">Products</a></li>
+                  <li class="nav-item px-2"><a href="" class="nav-link">Groups</a></li>
+                  <li class="nav-item px-2"><a href="" class="nav-link">Categories</a></li>
+                  <li class="nav-item px-2"><a href="" class="nav-link">Cart</a></li>
+                  <li class="nav-item px-2"><a href="" class="nav-link">Accessories</a></li>
+              </ul>
+            </div>
+            <div class="offcanvas offcanvas-end w-50" id="navCanvas">
+              <div class="offcanvas-body">
+                  <ul>
+                    <li class="py-3"><strong class="text-light">Products</strong></li>
+                    <li class="pt-3"><a href="">Groups</a></li>
+                    <li class="pt-3"><a href="">Categories</a></li>
+                    <li class="pt-3"><a href="">Cart</a></li>
+                    <li class="pt-3"><a href="">Accessories</a></li>
+                  </ul>
+              </div>
+            </div>
+        </nav>
+    </header> 
+    <main>
+      <section class="container">
+        <div class="get_started rounded mt-4 d-flex align-items-center justify-content-center">
+            <div class="words">
+              <p class="title text-center text-light">Welcome to Xawft Shop</p>
+              <p class="desc text-center text-light">Your go-to for everything fashion. Find your style, discover new trends, and shop the looks you love. Let's get started.</p>
+              <center><a href="/register" class="btn links px-2">Get Started</a> &nbsp;&nbsp; <a href="/auth" class="btn links px-2">Start Shopping</a></center>
+            </div>
+        </div>
+        <div class="categories mt-4">
+          <p class="title pb-2">Featured Categories</p>
+          <div class="row">
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/women.png" alt="woman image" class="w-100"> <p class="image_text pt-1">Women</p></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/men.png" alt="men image" class="w-100"> <p class="image_text pt-1">Men</p></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/kids.png" alt="kid image" class="w-100"> <p class="image_text pt-1">Kids</p></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/home.png" alt="accessories image" class="w-100"> <p class="image_text pt-1">Accessories</p></div>
+          </div>
+        </div>
+        <div class="categories mt-4">
+          <p class="title pb-2">Trending now</p>
+          <div class="row">
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/1.png" alt="woman image" class="w-100"></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/2.png" alt="men image" class="w-100"></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/3.png" alt="kid image" class="w-100"></div>
+            <div class="col-md-3 mt-sm-0 mt-3"><img src="./images/general/4.png" alt="accessories image" class="w-100"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="mt-5 container">
+        <center>
+          <p class="pb-1"><a href="/contact">Contact Us</a></p>
+          <a href="" class="footer-links"><i class="fa fa-instagram"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-facebook"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-twitter"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-linkedin"></i></a>
+          <p class="py-2 footer-text">© 2023 Xawft, Inc. All rights reserved.</p>
+        </center>
+    </footer>
+</body>
+</html>

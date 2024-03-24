@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Patch, Delete, Body, Param } from '@nestjs/common';
+import { Controller ,Get, Post, Patch, Delete, Body, Param, Req } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { CreateProductDto } from './dto/createProduct.dto';
 import { UseInterceptors, UploadedFiles } from '@nestjs/common';
@@ -6,11 +6,19 @@ import { multerConfig } from 'src/config/multer.config';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
+import * as fs from 'fs';
+import * as path from 'path';
+import * as sharp from "sharp";
+import { createReadStream } from 'fs';
 
 @ApiTags("Product")
 @Controller('product')
 export class ProductController {
     constructor(private productService: ProductService){}
+
+    
+
 
     @Post("/create")
     @UseInterceptors(FileFieldsInterceptor([
@@ -51,4 +59,6 @@ export class ProductController {
     public async lowStocks() {
         return this.productService.lowStockedProducts()
     }
+
+    
 }

@@ -29,7 +29,7 @@ export class UserService {
     const existingUser = await this.findOne(userDetails.email);
     const uuid = uuidv4();
       if(!existingUser){
-        userDetails.image = userDetails.gender == "male" ? "male.jpg" : "female.jpg";
+        userDetails.image = userDetails.gender == "male" ? "man.jpeg" : "woman.jpeg";
         if(userDetails.password === userDetails.confirm){
             const salt = await bcrypt.genSalt();
             const hash = await bcrypt.hash(userDetails.password, salt);
@@ -39,7 +39,7 @@ export class UserService {
               if(await newUser.save()){
                 const newPin = await new this.verifyModel({user_id: newUser._id, uuid: uuid, createdAt: Date.now()});
                 if(await newPin.save()){
-                  return {message: "User registration successful. Open your email and click the link that has been sent to you"}
+                  return {message: "User registration successful. Open your email and click the link that has been sent to you", status: true}
                 }
               }
             }
@@ -48,22 +48,21 @@ export class UserService {
         }
       }else if(existingUser && !existingUser.verified){
         const checkPin = await this.verifyModel.findOne({user_id: existingUser._id}).exec();
-        const pin_length = Number(checkPin.createdAt) + (1000 * 60 * 60 * 6);
         if(!checkPin){
           if(await this.transporter.sendMail({from: 'amuoladipupo420@gmail.com', to: existingUser.email, subject: "Verify your account", text: "Verify your account, If link is not clickable, copy the link and paste it in your browser" + "https://shop.onrender.com/user/verify/account/"+uuid})){
             const newPin = await new this.verifyModel({user_id: existingUser._id, uuid: uuid, createdAt: Date.now()});
             if(await newPin.save()){
-              return {message: "User registration successful. Open your email and click the link that has been sent to you"}
+              return {message: "User registration successful. Open your email and click the link that has been sent to you", status: true}
             }
           }
-        }else if(checkPin && Date.now() <= pin_length){
+        }else if(checkPin && Date.now() <= (Number(checkPin) + (1000 * 60 * 60 * 6))){
           if(await this.transporter.sendMail({from: 'amuoladipupo420@gmail.com', to: existingUser.email, subject: "Verify your account", text: "Verify your account, If link is not clickable, copy the link and paste it in your browser" + "https://shop.onrender.com/user/verify/account/"+uuid})){
-              return {message: "User registration successful. Open your email and click the link that has been sent to you"}
+              return {message: "User registration successful. Open your email and click the link that has been sent to you", status: true}
           }
         }else{
           if(await this.transporter.sendMail({from: 'amuoladipupo420@gmail.com', to: existingUser.email, subject: "Verify your account", text: "Verify your account, If link is not clickable, copy the link and paste it in your browser" + "https://shop.onrender.com/user/verify/account/"+uuid})){
-            if(await this.verifyModel.updateOne({user_id: existingUser._id}, {uuid: uuid}).exec()){
-              return {message: "User registration successful. Open your email and click the link that has been sent to you"}
+            if(await this.verifyModel.updateOne({user_id: existingUser._id}, {uuid: uuid, createdAt: Date.now()}).exec()){
+              return {message: "User registration successful. Open your email and click the link that has been sent to you", status: true}
             }
           }
         }

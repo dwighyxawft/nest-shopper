@@ -58,4 +58,9 @@ export class CreateOrderDto {
 
   @IsString()
   paymentStatus: string;
+  state: string;
+  city: string;
+  address: string;
+  delivery: boolean;
+  delivered: boolean;
 }

@@ -32,7 +32,7 @@ export class CategoryService {
 
     public async getCategoryById(id: string){
         try{
-            const category = await this.categoryModel.find({_id: id}).exec();
+            const category = await this.categoryModel.findOne({_id: id}).exec();
             return category;
         }catch(err){
             throw new HttpException({

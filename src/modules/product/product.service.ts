@@ -6,11 +6,12 @@ import { CreateProductDto } from './dto/createProduct.dto';
 import { UpdateProductDto } from './dto/updateProduct.dto';
 import { CategoryService } from '../category/category.service';
 import { GroupService } from '../group/group.service';
+import { UserService } from '../user/user.service';
 
 
 @Injectable()
 export class ProductService {
-    constructor(@InjectModel("Product") private readonly productModel: Model<IProduct>, private categoryService: CategoryService, private groupService: GroupService){}
+    constructor(@InjectModel("Product") private readonly productModel: Model<IProduct>, private categoryService: CategoryService, private groupService: GroupService, private userService: UserService){}
 
     public async getProducts(){
         try{
@@ -31,9 +32,10 @@ export class ProductService {
             const product = await this.productModel.findOne({_id: id}).exec();
             return product;
         }catch(err){
+
           throw new HttpException({
             status: HttpStatus.SERVICE_UNAVAILABLE,
-            error: 'Server Error, Please try again',
+            error: 'Server Error, Please try again' + err,
           }, HttpStatus.FORBIDDEN, {
             cause: err
           });
@@ -86,4 +88,18 @@ export class ProductService {
     public async updateProductQuantity(id: string, quantity: number){
         return await this.productModel.updateOne({_id: id}, {quantity: quantity})
     }
+
+    public async getRandomProducts(start: number, end: number, condition){
+        if(condition != null){
+          return await this.productModel.find(condition).sort({createdAt: -1}).skip(start).limit(end).exec();
+        }else{
+          return await this.productModel.find().sort({createdAt: -1}).skip(start).limit(end).exec();
+        }
+    }
+
+    public async getProductsByCondition(condition){
+      return await this.productModel.find(condition).exec();
+    }
+
+    
 }

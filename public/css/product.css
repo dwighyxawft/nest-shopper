@@ -1,0 +1,19 @@
+main{
+    min-height: 80vh;
+}
+.textly{
+    color: #1AE51A;
+}
+button.cart{
+    background-color: rgba(26, 229, 26, 0.179);
+    color: #0D1C0D;
+    font-weight: bold;
+}
+.line{
+    border: 2px solid #1AE51A;
+}
+a.cart{
+    background-color: #1AE51A;
+    color: #0D1C0D;
+    font-weight: bold;
+}

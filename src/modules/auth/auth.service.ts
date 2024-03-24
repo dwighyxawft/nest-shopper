@@ -27,28 +27,31 @@ export class AuthService {
         const access_token = await this.jwtService.signAsync(payload);
         const auth = await this.getToken(user._id);
         if (!auth) {
-          const newAuth = new this.authModel({
+          const newAuth = await new this.authModel({
             user_id: user._id,
             access_token: access_token,
           });
           if (await newAuth.save()) {
             res.cookie('access_token', access_token, { httpOnly: true });
-            return { access_token };
+            return { status: true };
           }
         } else {
           if (await this.updateToken(user._id, access_token)) {
             res.cookie('access_token', access_token, { httpOnly: true });
-            return { access_token };
+            return { status: true };
           }
         }
       } else {
-        return { message: 'Password is not correct' };
+        return { message: 'Password is not correct', status: false };
       }
     } else {
-      return { message: 'User does not exist' };
+      return { message: 'User does not exist', status: false };
     }
   }
 
+  login(): {message: string} {
+    return {message: "Login"};
+  }
   public async deleteToken(token) {
     return await this.authModel.deleteOne({ access_token: token }).exec();
   }

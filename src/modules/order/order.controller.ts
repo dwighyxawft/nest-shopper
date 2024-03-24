@@ -35,13 +35,13 @@ export class OrderController {
   }
 
   @Get('completed')
-  public async getCompletedOrders() {
-    return this.orderService.getOrdersByStatus("completed");
+  public async getCompletedOrders(@Req() req: Request) {
+    return this.orderService.getOrdersByStatus(req.user["sub"], "completed");
   }
 
   @Get('pending')
-  public async getPendingOrders() {
-    return this.orderService.getOrdersByStatus("pending");
+  public async getPendingOrders(@Req() req: Request) {
+    return this.orderService.getOrdersByStatus(req.user["sub"], "pending");
   }
 
   @Get("current")
