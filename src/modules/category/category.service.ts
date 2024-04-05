@@ -57,8 +57,8 @@ export class CategoryService {
         }
     }
 
-    public async updateCategory(id: string, category: UpdateCategoryDto){
-        if(await this.categoryModel.updateOne({_id: id}, {category})){
+    public async updateCategory(id, category: UpdateCategoryDto){
+        if(await this.categoryModel.updateOne({_id: id}, category).exec()){
             return {message: "Category updated successfully"}
         }
     }

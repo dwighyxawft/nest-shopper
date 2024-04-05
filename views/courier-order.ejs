@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="../../js/jquery-3.5.1.min.js"></script>
+    <script src="../../js/popper2.js"></script>
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <title>xawft shop || Courier Order</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <a href="/logout" class="navbar-brand ms-sm-3 ms-1"><img src="../../../images/general/logo.png" alt=""> Xawft Shop Courier</a>
+            <a href="" class="text-decoration-none d-sm-none d-inline"><img src="../../../images/admin/<%= admin.image %>" class="rounded-circle border-success border" width="60" alt="user-image"></a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <a href="" class="text-decoration-none justify-self-end me-3"><img src="../../../images/admin/<%= admin.image %>" class="rounded-circle border-success border" width="60" alt="user-image"></a>
+            </div>
+        </nav>
+    </header> 
+    <main class="container-fluid">
+        <div class="row" id="row">
+            
+            <!-- Main Content Column -->
+            <div class="col-md-12" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
+                <table class="table table-responsive rounded mt-4">
+                    <thead>
+                        <tr>
+                            <th><strong>Order Id</strong></th>
+                            <th><strong>Order Date</strong></th>
+                            <th><strong>Total Amount</strong></th>
+                            <th><strong>User Email</strong></th>
+                            <th><strong>Order Status</strong></th>
+                            <th><strong>Action</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(orders.length > 0){
+                            orders.forEach(function(order){ %>
+                                <tr>
+                                    <td class="py-3"><a href="/admin/order/<%= order._id %>" class="textly text-decoration-none"><%= order._id %></a></td>
+                                    <td class="py-3"><% 
+                                        const date = new Date(order.updatedAt);
+                                        const options = {month: "long", day: "numeric", year: "numeric"};
+                                        const formattedDate = date.toLocaleDateString("en-US", options); %>
+                                        <%= formattedDate %>
+                                    </td>
+                                    <td class="py-3"><b>#<%= order.total %></b></td>
+                                    <td class="textly py-3"><%= order.userEmail %></td>
+                                    <td class="py-3"><span class="badge badge-pill bg-warning"><%= order.paymentStatus %></span></td>
+                                    <% if(order.paymentStatus == "completed"){ %>
+                                        <td class="py-3"><button data-order="<%= order._id %>" data-status="in-transit" class="btn btn-success btn-sm check">check</button></td>
+                                    <% }else if(order.paymentStatus == "in-transit"){ %>
+                                        <td class="py-3"><button data-order="<%= order._id %>" data-status="delivered" class="btn btn-success btn-sm check">check</button></td>
+                                    <% } %>
+                                </tr>
+                        <%  })
+                        }else{ %>
+                            <tr>
+                                <td colspan="6"><center><h5>There are no orders in the database</h5></center></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                    
+                </table>
+                <input type="hidden" id="links" value="<%= links %>">
+                
+                <ul class="pagination mt-5">
+
+                </ul>
+            </div>
+        </div>
+    </main>
+    
+    <footer class="mt-5 container">
+        <center>
+          <a href="" class="footer-links"><i class="fa fa-instagram"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-facebook"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-twitter"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-linkedin"></i></a>
+          <p class="py-2 footer-text">© 2023 Xawft, Inc. All rights reserved.</p>
+        </center>
+    </footer>
+    <script>
+        const links = Number($("#links").val());
+        const pagination = document.querySelector("ul.pagination");
+        var url = window.location.href;
+        let template = "";
+        if(links > 0){
+            if(url.indexOf("?") == -1){
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}?get=${i*24}"> ${i+1}</a></li>`
+                }
+            }else{
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}&get=${i*24}"> ${i+1}</a></li>`
+                }
+            }
+            pagination.insertAdjacentHTML("afterbegin", template);
+        }
+
+        const checks = document.querySelectorAll(".checks");
+        checks.forEach(function(check){
+            check.addEventListener("click", function(){
+                const order_id = check.getAttribute("data-order");
+                const status = check.getAttribute("data-status");
+                $.ajax({
+                    url: "/order/check?order_id="+order_id+"&status="+status+"",
+                    type: "patch",
+                    dataType: "json",
+                    success: function(data){
+                        if(data.status){
+                            alert("Order of id "+order_id+" now in transit")
+                        }
+                    },
+                    error: function(err){
+                        console.error(err);
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

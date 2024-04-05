@@ -56,8 +56,8 @@
               </li>
               <li class="nav-item ps-2 dropdown"><img src="../images/users/<%= user.image %>" data-bs-toggle="dropdown" class="dropdown-toggle rounded-circle" width="40" alt="user image">
                 <ul class="dropdown-menu">
-                    <li class="dropdown-item"><a href="" class="sidebar">Profile</a></li>
-                    <li class="dropdown-item"><a href="" class="sidebar">Logout</a></li>
+                    <li class="dropdown-item"><a href="/shop/settings" class="sidebar">Profile</a></li>
+                    <li class="dropdown-item"><a href="/logout" class="sidebar">Logout</a></li>
                 </ul> 
               </li>              
             </ul>
@@ -70,8 +70,8 @@
                 <li class="pt-3"><a href="/shop/category">Categories</a></li>
                 <li class="pt-3"><a href="/shop/cart">Cart</a></li>
                 <li class="pt-3"><a href="/shop/order">Orders</a></li>
-                <li class="pt-3"><a href="">Settings</a></li>
-                <li class="pt-3"><a href="">Logout</a></li>
+                <li class="pt-3"><a href="/shop/settings">Settings</a></li>
+                <li class="pt-3"><a href="/logout">Logout</a></li>
               </ul>
           </div>
         </div>
@@ -80,7 +80,7 @@
     <main class="container-fluid">
         <div class="row">
             <!-- Sidebar Column -->
-            <div class="col-md-4 d-sm-flex d-none" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
+            <div class="col-md-3 d-sm-flex d-none" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
                 <!-- Sidebar Navigation -->
                 <nav class="mt-3 w-100">
                   <ul class="list-group border-0">
@@ -100,7 +100,7 @@
             </div>
             
             <!-- Main Content Column -->
-            <div class="col-md-8" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
+            <div class="col-md-9" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
                 <% if(category != null){ %>
                   <h3 class="ps-2 pt-3 fw-bolder"><%= category.name %></h3>
                 <% } %>
@@ -123,21 +123,9 @@
                       </div>
                   <% } %>
                 </div>
-              <% if(links > 0){ %>
-                  <ul class="pagination">
-                      <% 
-                      var url = window.location.href;
-                      if(url.indexOf("?") !== -1 || url.indexOf("&") !== -1){
-                          for(var i = 0; i < links; i++){ %>
-                              <li class="page-item"><a class="page-link" href="<%= url %>&get=<%= i*24 %>"><%= i+1 %></a></li>
-                          <% }
-                      }else{ 
-                          for(var i = 0; i < links; i++){ %>
-                              <li class="page-item"><a class="page-link" href="<%= url %>?get=<%= i*24 %>"><%= i+1 %></a></li>
-                          <% }
-                      } %>
-                  </ul>
-              <% } %>
+                <input type="hidden" id="links" value="<%= links %>">
+                <ul class="pagination mt-3">
+                </ul>
             </div>
         </div>
     </main>
@@ -149,5 +137,23 @@
           <p class="py-2 footer-text">© 2023 Xawft, Inc. All rights reserved.</p>
         </center>
     </footer>
+    <script>
+      const links = Number($("#links").val());
+        const pagination = document.querySelector("ul.pagination");
+        var url = window.location.href;
+        let template = "";
+        if(links > 0){
+            if(url.indexOf("?") == -1){
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}?get=${i*24}"> ${i+1}</a></li>`
+                }
+            }else{
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}&get=${i*24}"> ${i+1}</a></li>`
+                }
+            }
+            pagination.insertAdjacentHTML("afterbegin", template);
+        }
+    </script>
 </body>
 </html>

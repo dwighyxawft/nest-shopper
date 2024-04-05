@@ -94,13 +94,9 @@
                       </div>
                     <% } %>
                 </div>
-                <% if(links > 0){ %>
-                  <ul class="pagination">
-                    <% for(var i = 0; i < links; i++){ %>
-                      <li class="page-item"><a class="page-link" href="/shop/home<%= i*24 %>"><%= i+1 %></a></li>
-                    <% } %>
+                <input type="hidden" id="links" value="<%= links %>">
+                  <ul class="pagination mt-3">
                   </ul>
-                <% } %>
             </div>
         </div>
     </main>
@@ -112,5 +108,24 @@
           <p class="py-2 footer-text">© 2023 Xawft, Inc. All rights reserved.</p>
         </center>
     </footer>
+
+    <script>
+      const links = Number($("#links").val());
+        const pagination = document.querySelector("ul.pagination");
+        var url = window.location.href;
+        let template = "";
+        if(links > 0){
+            if(url.indexOf("?") == -1){
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}?get=${i*24}"> ${i+1}</a></li>`
+                }
+            }else{
+                for(var i = 0; i < links; i++){
+                    template += `<li class="page-item"><a class="page-link" href="${url}&get=${i*24}"> ${i+1}</a></li>`
+                }
+            }
+            pagination.insertAdjacentHTML("afterbegin", template);
+        }
+    </script>
 </body>
 </html>

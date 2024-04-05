@@ -161,14 +161,36 @@ export class OrderService {
     }
   }
 
-  public async getCurrentCompletedOrders(){
+  public async getCurrentOrders(start: number, end: number){
     const today_set = new Date();
     today_set.setHours(23,59,59,999);
-    const timestamp_set = today_set.getTime();
     const today_dawn = new Date();
     today_dawn.setHours(0,0,0,0);
-    const timestamp_dawn = today_dawn.getTime();
-    const completed_orders = await this.orderModel.find({$and: [{paymentStatus: {$eq: "completed"}}, {$and: [{updatedAt: {$gte: today_dawn}}, {updatedAt: {$lte: today_set}}]}]}).exec();
-    return completed_orders
+    const orders = await this.orderModel.find({$and: [{updatedAt: {$gte: today_dawn}}, {updatedAt: {$lte: today_set}}]}).sort({createdAt: -1}).skip(start).limit(end).exec();
+    return orders
+  }
+
+  public async getRandomOrders(start: number, end: number, condition){
+      if(condition != null){
+        return await this.orderModel.find(condition).sort({createdAt: -1}).skip(start).limit(end).exec();
+      }else{
+        return await this.orderModel.find().sort({createdAt: -1}).skip(start).limit(end).exec();
+      }
+  }
+
+  public async getOrdersByCondition(condition){
+    if(condition != null){
+      return await this.orderModel.find(condition).exec();
+    }else{
+      return await this.orderModel.find().exec();
+    }
+  }
+
+  public async updateStatus(order_id: string, status: string){
+    if(await this.orderModel.updateOne({_id: order_id}, {paymentStatus: status}).exec()){
+      return {status: true};
+    }else{
+      return {status: false};
+    }
   }
 }

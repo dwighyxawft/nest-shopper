@@ -44,11 +44,6 @@ export class OrderController {
     return this.orderService.getOrdersByStatus(req.user["sub"], "pending");
   }
 
-  @Get("current")
-  public async getCurrentOrders() {
-    return this.orderService.getCurrentCompletedOrders();
-  }
-
   @Get(':id')
   public async getOrderById(@Param('id') id: string) {
     return this.orderService.getOrderById(id);
@@ -67,6 +62,11 @@ export class OrderController {
   @Delete(':id')
   public async deleteOrderById(@Param('id') id: string) {
     return this.orderService.deleteOrderById(id);
+  }
+
+  @Patch("check")
+  public async updateStatus(@Query("order_id") order_id: string, @Query("status") status: string){
+    return this.orderService.updateStatus(order_id, status);
   }
 
 

@@ -1,34 +1,46 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Req, Query } from '@nestjs/common';
 import { CourierService } from './courier.service';
 import { CreateCourierDto } from './dto/create-courier.dto';
 import { UpdateCourierDto } from './dto/update-courier.dto';
+import { CustomRequest } from 'src/interface/custom.interface';
+import { UpdateCourierPassDto } from './dto/update-password.dto';
 
 @Controller('courier')
 export class CourierController {
   constructor(private readonly courierService: CourierService) {}
 
-  @Post()
+  @Post("create")
   create(@Body() createCourierDto: CreateCourierDto) {
     return this.courierService.create(createCourierDto);
   }
 
   @Get()
-  findAll() {
-    return this.courierService.findAll();
+  findAll(@Req() req: CustomRequest) {
+    return this.courierService.findAll(req.admin["sub"]);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.courierService.findOne(+id);
+  findById(@Param('id') id: string) {
+    return this.courierService.findById(id);
+  }
+
+  @Get('')
+  findOne(@Query('email') email: string) {
+    return this.courierService.findOne(email);
+  }
+
+  @Patch('password/:id')
+  password(@Body() updateAdminDto: UpdateCourierPassDto, @Param("id") id: string) {
+    return this.courierService.password(id, updateAdminDto);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateCourierDto: UpdateCourierDto) {
-    return this.courierService.update(+id, updateCourierDto);
+  update(@Body() updateAdminDto: UpdateCourierDto, @Param("id") id: string) {
+    return this.courierService.update(id, updateAdminDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.courierService.remove(+id);
+    return this.courierService.remove(id);
   }
 }

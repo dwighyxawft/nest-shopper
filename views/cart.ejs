@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/index.css">
-    <link rel="stylesheet" href="css/product.css">
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/product.css">
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="../../js/jquery-3.5.1.min.js"></script>
@@ -28,8 +28,8 @@
                   <li class="nav-item px-2"><a href="/shop/cart" class="nav-link active">Cart</a></li>
                   <li class="nav-item ps-2 dropdown"><img src="../images/users/<%= user.image %>" data-bs-toggle="dropdown" class="dropdown-toggle rounded-circle" width="40" alt="user image">
                     <ul class="dropdown-menu">
-                        <li class="dropdown-item"><a href="" class="sidebar">Profile</a></li>
-                        <li class="dropdown-item"><a href="" class="sidebar">Logout</a></li>
+                        <li class="dropdown-item"><a href="/shop/settings" class="sidebar">Profile</a></li>
+                        <li class="dropdown-item"><a href="/logout" class="sidebar">Logout</a></li>
                     </ul> 
                   </li>       
               </ul>
@@ -42,8 +42,8 @@
                     <li class="pt-3"><a href="/shop/category">Categories</a></li>
                     <li class="pt-3"><a href="/shop/cart">Cart</a></li>
                     <li class="pt-3"><a href="/shop/order">Order</a></li>
-                    <li class="pt-3"><a href="">Settings</a></li>
-                    <li class="pt-3"><a href="">Logout</a></li>
+                    <li class="pt-3"><a href="/shop/settings">Settings</a></li>
+                    <li class="pt-3"><a href="/logout">Logout</a></li>
                   </ul>
               </div>
             </div>
@@ -56,7 +56,7 @@
                 <div class="row mt-5">
                     <% products.forEach(function(product){ %>
                         <div class="col-3 col-md-2">
-                            <img src="../images/product/<%= product.image[1] %>" alt="image 1" class="w-100">
+                            <img src="../../images/products/<%= product.images[1] %>" alt="image 1" class="w-100">
                         </div>
                         <div class="col-6 col-md-7 d-flex align-items-center">
                             <p><span><strong><%= product.name %></strong></span> <br> <span class="textly">N<%= product.price %></span> <br> <span class="textly"><%= product.size %></span></p>
@@ -81,7 +81,7 @@
                         <p class="textly">Subtotal(<%= cart.length %> items)</p>
                     </div>
                     <div class="col-4 text-end">
-                        <p>N<%= total %></p>
+                        <p>#<%= total %></p>
                     </div>
                     <div class="col-8">
                         <p class="textly">Delivery</p>
@@ -107,28 +107,25 @@
                     <div class="col-4 text-end">
                         <p class="total"></p>
                     </div>
-                    <input type="checkbox" name="delivery" id="delivery"> Delivery
-                    <form action="" method="post" id="deliveryForm">
-                        <div class="col-6">
-                            <div class="form-group mb-3">
-                                <label for="state" class="pb-1"><strong>State</strong></label>
-                                <select name="state" id="state" class="form-control form-control-lg">
-                            
-                                </select>
-                            </div>
+                    <span><input type="checkbox" class="form-label" id="delivery"> <b>Delivery</b></span>
+                    <form method="post" id="deliveryForm">
+                        <div class="form-group mb-3">
+                            <label for="state" class="pb-1"><strong>State</strong></label>
+                            <select name="state" id="state" class="form-control form-control-lg">
+                        
+                            </select>
                         </div>
-                        <div class="col-6">
-                            <div class="form-group mb-3">
-                                <label for="city" class="pb-1"><strong>City</strong></label>
-                                <select name="city" id="city" class="form-control form-control-lg">
-                            
-                                </select>
-                            </div>
+                        <div class="form-group mb-3">
+                            <label for="city" class="pb-1"><strong>City</strong></label>
+                            <select name="city" id="city" class="form-control form-control-lg">
+                        
+                            </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="address" class="pb-1"><strong>Street Address</strong></label>
                             <input type="text" name="address" id="address" placeholder="Address" class="form-control form-control-lg">
                         </div>
+                        <span><input type="checkbox" class="form-label" name="delivery" checked> <b>Delivery</b></span>
                         <button type="submit" class="btn cart w-100">Continue to Checkout</button>
                     </form>
                 </div>
@@ -141,7 +138,7 @@
             <div class="row mt-5">
                 <% three.forEach(function(product){ %>
                     <div class="col-3 col-md-2">
-                        <img src="../images/products/<%= product.images[0] %>" alt="image" class="w-100">
+                        <img src="../../images/products/<%= product.images[0] %>" alt="image" class="w-100">
                     </div>
                     <div class="col-6 col-md-7 d-flex align-items-center">
                         <p><span><strong><%= product.name %></strong></span> <br> <span class="textly">#<%= product.price %>.00</span> <br> <span class="textly"><%= product.size %></span></p>
@@ -166,7 +163,7 @@
     </footer>
     <script>
         const total = Number(JSON.parse(JSON.stringify("<%= total %>")));
-        $("p.total").text("N"+total+".00")
+        $("p.total").text("#"+total+".00")
         const stateSelect = document.querySelector("#state");
         const citySelect = document.querySelector("#city");
         function ajaxGet(url, resolve, reject){
@@ -183,12 +180,12 @@
             })
         }
         const getStates = new Promise((resolve, reject) => {
-            ajaxGet("https://nigeria-states-towns-lga.onrender.com/api/states", resolve, reject);
+            ajaxGet("/location", resolve, reject);
         })
         getStates.then(function(states){
             let template = "<option>Select a state</option>";
             states.forEach(state => {
-                template += `<option value="${state.state_code}">${state.name}</option>`;
+                template += `<option value="${state.state}">${state.state}</option>`;
             });
             stateSelect.insertAdjacentHTML("afterbegin", template);
         }).catch(function(error){
@@ -198,12 +195,12 @@
         stateSelect.addEventListener("change", function(){
             const state = stateSelect.value;
             const getCities = new Promise((resolve, reject) => {
-                ajaxGet("https://nigeria-states-towns-lga.onrender.com/api/"+ state +"/lgas", resolve, reject);
+                ajaxGet("/location/state/"+ state, resolve, reject);
             })
             getCities.then(function(cities){
                 let template = "<option>Select a city</option>";
                 cities.forEach(city => {
-                    template += `<option value="${city.name}">${city.name}</option>`;
+                    template += `<option value="${city.cities}">${city.cities}</option>`;
                 });
                 citySelect.innerHTML = template;
             }).catch(function(error){
@@ -214,16 +211,17 @@
         deliveryForm.hide();
         const deliveryCheckBox = document.querySelector("#delivery");
         deliveryCheckBox.addEventListener("change", function(){
-            if(deliveryCheckBox.getAttribute("checked")){
+            if(deliveryCheckBox.checked){
                 $("#checkout").hide();
                 deliveryForm.show();
                 $("p.fee").text("N2500.00")
-                $("p.total").text("N"+total+2500+".00")
+                const d_fee = total+2500;
+                $("p.total").text("#"+d_fee+".00")
             }else{
                 deliveryForm.hide();
                 $("#checkout").show();
                 $("p.fee").text("N0.00")
-                $("p.total").text("N"+total+".00")
+                $("p.total").text("#"+total+".00")
             }
         })
 
@@ -233,14 +231,15 @@
         adder.forEach(function(addy){
             addy.addEventListener("click", function(){
                 const product = addy.getAttribute("data-product");
+                console.log(product);
                 $.ajax({
                     url: "/cart/add/"+product,
                     type: "patch",
                     dataType: "json",
                     success: function(data){
                         if(data.status){
-                            const quants = Number($("."product).text());
-                            $("."product).text(quants+1);
+                            const quants = Number($("."+product).text());
+                            $("."+product).text(quants+1);
                         }else if(!data.status && !data.failed){
                             alert(data.message);
                         }else{
@@ -261,8 +260,8 @@
                     dataType: "json",
                     success: function(data){
                         if(data.status){
-                            const quants = Number($("."product).text());
-                            $("."product).text(quants-1);
+                            const quants = Number($("."+product).text());
+                            $("."+product).text(quants-1);
                         }else if(!data.status && !data.failed){
                             alert(data.message);
                         }else{
@@ -314,7 +313,7 @@
             })
         })
 
-        $("#checkout").on("submit", function(e){
+        $("#checkout").on("click", function(e){
             e.preventDefault();
             $.ajax({
                 url: "/order/create",

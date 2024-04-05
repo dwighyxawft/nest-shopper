@@ -46,10 +46,12 @@ export class CartService {
         const checkProduct = await this.productService.getProductById(product);
         if(checkProduct){
             const index = user.cart.findIndex((item) => item.productId === product)
-            const quantity = user.cart[index].quantity + 1;
+            const quantity = Number(user.cart[index].quantity) + 1;
             if(checkProduct.quantity >= quantity){
-                user.cart[index].quantity += 1;
+                user.cart[index].quantity = Number(user.cart[index].quantity) + 1;
+                user.cart[index].total = Number(user.cart[index].price) * Number(user.cart[index].quantity)
                 if(await this.userService.updateCart(id, user.cart)){
+                    console.log(user.cart[index]);
                     return {status: true}
                 }
             }else{
@@ -67,9 +69,10 @@ export class CartService {
         const checkProduct = await this.productService.getProductById(product);
         if(checkProduct){
             const index = user.cart.findIndex((item) => item.productId === product)
-            const quantity = user.cart[index].quantity - 1;
+            const quantity = Number(user.cart[index].quantity) - 1;
             if(checkProduct.quantity >= quantity){
-                user.cart[index].quantity -= 1;
+                user.cart[index].quantity = Number(user.cart[index].quantity) - 1;
+                user.cart[index].total = Number(user.cart[index].price) * Number(user.cart[index].quantity)
                 if(await this.userService.updateCart(id, user.cart)){
                     return {status: true}
                 }

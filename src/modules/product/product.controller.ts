@@ -36,11 +36,11 @@ export class ProductController {
         { name: 'image2', maxCount: 1 },
         { name: 'image3', maxCount: 1 },
     ], multerConfig))
-    public async updateProduct(@Param() id: string, @UploadedFiles() files: { image1: Express.Multer.File, image2: Express.Multer.File, image3: Express.Multer.File }, @Body() product: UpdateProductDto) {
+    public async updateProduct(@Param("id") id: string, @UploadedFiles() files: { image1: Express.Multer.File, image2: Express.Multer.File, image3: Express.Multer.File }, @Body() product: UpdateProductDto) {
         return this.productService.updateProduct(id, product, files)
     }
 
-    @Delete("/delete/:id")
+    @Delete("/:id")
     public async deleteProduct(@Param() id: string) {
         return this.productService.deleteProductById(id)
     }

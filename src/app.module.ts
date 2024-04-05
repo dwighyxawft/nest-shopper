@@ -26,8 +26,8 @@ import { CheckAuthMiddleware } from './middlewares/checkAuth.middleware';
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes({path: "cart/*", method: RequestMethod.ALL}, {path: "order/*", method: RequestMethod.ALL}, {path: "product/*", method: RequestMethod.ALL}, {path: "category/*", method: RequestMethod.ALL}, {path: "group/*", method: RequestMethod.ALL}, {path: "complaint/*", method: RequestMethod.ALL}, {path: "user/image", method: RequestMethod.PATCH}, {path: "user/password", method: RequestMethod.PATCH}, {path: "user/details", method: RequestMethod.PATCH}, {path: "user/:id", method: RequestMethod.DELETE}, {path: "shop/*", method: RequestMethod.GET})
-    .apply(CheckAuthMiddleware).forRoutes({path: "/", method: RequestMethod.GET}, {path: "/auth", method: RequestMethod.GET}, {path: "/register", method: RequestMethod.GET}, {path: "/forgot/password", method: RequestMethod.GET})
+    consumer.apply(AuthMiddleware).forRoutes({path: "cart/*", method: RequestMethod.ALL}, {path: "order/*", method: RequestMethod.ALL}, {path: "product/*", method: RequestMethod.ALL}, {path: "category/*", method: RequestMethod.ALL}, {path: "group/*", method: RequestMethod.ALL}, {path: "complaint/*", method: RequestMethod.ALL}, {path: "admin/*", method: RequestMethod.ALL}, {path: "user/image", method: RequestMethod.PATCH}, {path: "user/password", method: RequestMethod.PATCH}, {path: "user/details", method: RequestMethod.PATCH}, {path: "user/:id", method: RequestMethod.DELETE}, {path: "shop/*", method: RequestMethod.GET})
+    .apply(CheckAuthMiddleware).forRoutes({path: "/", method: RequestMethod.GET}, {path: "/auth", method: RequestMethod.GET}, {path: "/register", method: RequestMethod.GET}, {path: "/forgot/password", method: RequestMethod.GET}, {path: "/access/auth", method: RequestMethod.GET})
   }
 }
 

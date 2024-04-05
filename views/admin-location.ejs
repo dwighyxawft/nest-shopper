@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/index.css">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="../../js/jquery-3.5.1.min.js"></script>
+    <script src="../../js/popper2.js"></script>
+    <script src="../../bootstrap/js/bootstrap.min.js"></script>
+    <title>xawft shop || Location</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm bg-light navbar-light">
+            <a href="/" class="navbar-brand ms-sm-3 ms-1"><img src="../../images/general/logo.png" alt=""> Xawft Shop Admin</a>
+            <a href="" class="text-decoration-none d-sm-none d-inline"><img src="../../images/admin/<%= admin.image %>" class="rounded-circle border-success border" width="60" alt="user-image"></a>
+            <div class="collapse navbar-collapse justify-content-end">
+                <a href="" class="text-decoration-none justify-self-end me-3"><img src="../../images/admin/<%= admin.image %>" class="rounded-circle border-success border" width="60" alt="user-image"></a>
+            </div>
+            <button class="navbar-toggler border-0" data-bs-toggle="offcanvas" data-bs-target="#navCanvas"><span class="navbar-toggler-icon"></span></button>
+            <div class="offcanvas offcanvas-end w-50 bg-light" id="navCanvas">
+                <div class="offcanvas-body bg-light">
+                    <ul class="list-group border-0">
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/home" class="sidebar w-100 btn text-start text-dark">Home</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/order" class="sidebar w-100 btn text-start text-dark">Orders</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/complaint" class="sidebar w-100 btn text-start text-dark">Complaints</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/courier" class="sidebar w-100 btn text-start text-dark">Courier</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/category" class="sidebar w-100 btn text-start text-dark">Category</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/group" class="sidebar w-100 btn text-start text-dark">Groups</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/product" class="sidebar w-100 btn text-start text-dark">Products</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/access" class="sidebar w-100 btn text-start text-dark">Access</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/location" class="sidebar active w-100 btn text-start text-dark">Locations</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/logout" class="sidebar w-100 btn text-start text-dark">Logout</a></li>
+                    </ul>
+                </div>
+              </div>
+        </nav>
+    </header> 
+    <main class="container-fluid">
+        <div class="row" id="row">
+            <!-- Sidebar Column -->
+            <div class="col-md-3 d-sm-flex d-none" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
+                <!-- Sidebar Navigation -->
+                <nav class="mt-3 w-100">
+                    <ul class="list-group border-0">
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/home" class="sidebar w-100 btn text-start">Home</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/order" class="sidebar w-100 btn text-start">Orders</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/complaint" class="sidebar w-100 btn text-start">Complaints</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/courier" class="sidebar w-100 btn text-start">Courier</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/category" class="sidebar w-100 btn text-start">Category</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/group" class="sidebar w-100 btn text-start">Groups</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/product" class="sidebar w-100 btn text-start">Products</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/access" class="sidebar w-100 btn text-start">Access</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/admin/location" class="sidebar active w-100 btn text-start">Locations</a></li>
+                        <li class="list-group-item pt-1 w-100 border-0"><a href="/logout" class="sidebar w-100 btn text-start">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+            
+            <!-- Main Content Column -->
+            <div class="col-md-9" style="height: 80vh; overflow-y: scroll; scrollbar-width: none; -ms-overflow-style: none;">
+                <div class="d-flex justify-content-end mt-3">
+                    <a href="/admin/location/create" class="btn btn-dark">Create Location</a>
+                </div>
+                <table class="table table-responsive rounded mt-4">
+                    <thead>
+                        <tr>
+                            <th><strong>Location Id</strong></th>
+                            <th><strong>State</strong></th>
+                            <th><strong>City</strong></th>
+                            <th><strong>Action</strong></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% if(locations.length > 0){
+                            locations.forEach(function(location){
+                            %>
+                            <tr>
+                                <td class="py-3 textly"><a href="/admin/location/create?location_id=<%= location._id %>" class="textly text-decoration-none"><%= location._id %></a></td>
+                                <td class="py-3"><span class="badge badge-pill bg-dark"><%= location.state %></span></td>
+                                <td class="py-3"><span class="badge badge-pill bg-primary"><%= location.city %></span></td>
+                                <td class="py-3"><a href="/admin/location/create?location_id=<%= location._id %>" class="btn btn-primary btn-sm">Edit</a> &nbsp; <button class="btn btn-danger btn-sm delete" data-location="<%= location._id %>">Delete</></td>
+                            </tr>
+                        <%   })
+                          }else{ %>
+                            <tr>
+                                <td colspan="4"><center><h5>There are no locations in the database</h5></center></td>
+                            </tr>
+                        <% } %>
+                        
+                    </tbody>
+                    
+                </table>
+
+            </div>
+        </div>
+    </main>
+    
+    <footer class="mt-5 container">
+        <center>
+          <a href="" class="footer-links"><i class="fa fa-instagram"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-facebook"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-twitter"></i></a> &nbsp; &nbsp; <a href="" class="footer-links"><i class="fa fa-linkedin"></i></a>
+          <p class="py-2 footer-text">© 2023 Xawft, Inc. All rights reserved.</p>
+        </center>
+    </footer>
+    <script>
+        const deletes = document.querySelectorAll(".delete");
+        deletes.forEach(function(eraser){
+            eraser.addEventListener("click", function(){
+                const location = eraser.getAttribute("data-location");
+                $.ajax({
+                    url: "/location/"+courier_id,
+                    type: "delete",
+                    dataType: "json",
+                    success: function(data){
+                        if(data.status){
+                            location.reload(true)
+                        }
+                    },
+                    error: function(err){
+                        console.error(err);
+                    }
+                })
+            })
+        })
+    </script>
+</body>
+</html>

@@ -8,6 +8,12 @@ export class Auth extends Document {
   @Prop({ required: true })
   user_id: string;
 
+  @Prop({ required: true })
+  admin_id: string;
+
+  @Prop({ required: true })
+  courier_id: string;
+
   @Prop({ required: true, unique: true })
   access_token: string;
 

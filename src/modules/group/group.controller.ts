@@ -14,8 +14,8 @@ export class GroupController {
         return this.groupService.createGroup(group);
     }
 
-    @Patch("update/:id")
-    public async updateGroup(@Param() id: string ,@Body() group: UpdateGroupDto){
+    @Patch(":id")
+    public async updateGroup(@Param("id") id: string ,@Body() group: UpdateGroupDto){
         return this.groupService.updateGroup(id, group);
     }
 

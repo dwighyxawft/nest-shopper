@@ -58,7 +58,7 @@ export class GroupService {
   }
 
   public async updateGroup(id: string, group: UpdateGroupDto){
-      if(await this.groupModel.updateOne({_id: id}, {group})){
+      if(await this.groupModel.updateOne({_id: id}, group)){
           return {message: "Group updated successfully"}
       }
   }

@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/index.css">
-    <link rel="stylesheet" href="../css/product.css">
-    <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../font-awesome-4.7.0/css/font-awesome.min.css">
-    <script src="../js/jquery-3.5.1.min.js"></script>
-    <script src="../js/popper2.js"></script>
-    <script src="../bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../../../css/index.css">
+    <link rel="stylesheet" href="../../../css/product.css">
+    <link rel="stylesheet" href="../../../bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../../font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="../../../js/jquery-3.5.1.min.js"></script>
+    <script src="../../../js/popper2.js"></script>
+    <script src="../../../bootstrap/js/bootstrap.min.js"></script>
     <title>xawft shop</title>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm bg-light navbar-light">
             <div class="d-flex">
-                <a href="/" class="navbar-brand ms-sm-3 ms-1"><img src="../images/general/logo.png" alt=""> Xawft Shop</a>
+                <a href="/" class="navbar-brand ms-sm-3 ms-1"><img src="../../../images/general/logo.png" alt=""> Xawft Shop</a>
               <button class="navbar-toggler border-0" data-bs-toggle="offcanvas" data-bs-target="#navCanvas"><span class="navbar-toggler-icon"></span></button>
             </div>
             <div class="collapse navbar-collapse justify-content-end me-3">
@@ -26,7 +26,7 @@
                   <li class="nav-item px-2"><a href="/shop/category" class="nav-link">Categories</a></li>
                   <li class="nav-item px-2"><a href="/shop/order" class="nav-link">Order</a></li>
                   <li class="nav-item px-2"><a href="/shop/cart" class="nav-link">Cart</a></li>
-                  <li class="nav-item ps-2 dropdown"><img src="../images/users/<%= user.image %>" data-bs-toggle="dropdown" class="dropdown-toggle rounded-circle" width="40" alt="user image">
+                  <li class="nav-item ps-2 dropdown"><img src="../../../images/users/<%= user.image %>" data-bs-toggle="dropdown" class="dropdown-toggle rounded-circle" width="40" alt="user image">
                     <ul class="dropdown-menu">
                         <li class="dropdown-item"><a href="/shop/settings" class="sidebar">Profile</a></li>
                         <li class="dropdown-item"><a href="/logout" class="sidebar">Logout</a></li>
@@ -53,11 +53,11 @@
         <h4 class="fw-bolder pt-5"></h4>
         <p><a href="" class="textly text-decoration-none">Home /</a> <a href="<%= category._id %>" class="textly text-decoration-none"> <%= category.name %> / </a> <%= group.name %></p>
         <div class="product-details row mt-2">
-            <div class="col-md-1 col-3">
-                <img src="../images/product/<%= product.image[1] %>" class="rounded" alt="product image">
+            <div class="col-md-3">
+                <img src="../../../images/products/<%= product.images[1] %>" class="rounded" alt="product image">
             </div>
-            <div class="col-9">
-                <h6 class="fw-bolder"><%= prouct.name %></h6>
+            <div class="col-md-7">
+                <h5 class="fw-bolder"><%= product.name %></h5>
                 <p class="textly"><%= product.size %>
                 </p>
             </div>
@@ -85,19 +85,19 @@
         <h4 class="fw-bolder pt-5">Check product images here</h4>
         <div class="row mt-4">
             <div class="col-md-4">
-                <img src="../images/product/<%= product.image[0] %>" class="w-100" alt="first detailed image">
-                <h6 class="fw-bolder">{{product.name}}</h6>
-                <p class="textly">{{product.price}}</p>
+                <img src="../../../images/products/<%= product.images[0] %>" class="w-100" alt="first detailed image">
+                <h6 class="fw-bolder text-center pt-2"><%= product.name %></h6>
+                <p class="textly text-center">#<%= product.price %>.00</p>
             </div>
             <div class="col-md-4">
-                <img src="../images/product/<%= product.image[1] %>" class="w-100" alt="first detailed image">
-                <h6 class="fw-bolder">{{product.name}}</h6>
-                <p class="textly">{{product.price}}</p>
+                <img src="../../../images/products/<%= product.images[1] %>" class="w-100" alt="first detailed image">
+                <h6 class="fw-bolder text-center pt-2"><%= product.name %></h6>
+                <p class="textly text-center">#<%= product.price %>.00</p>
             </div>
             <div class="col-md-4">
-                <img src="../images/product/<%= product.image[2] %>" class="w-100" alt="first detailed image">
-                <h6 class="fw-bolder">{{product.name}}</h6>
-                <p class="textly">{{product.price}}</p>
+                <img src="../../../images/products/<%= product.images[2] %>" class="w-100" alt="first detailed image">
+                <h6 class="fw-bolder text-center pt-2"><%= product.name %></h6>
+                <p class="textly text-center">#<%= product.price %>.00</p>
             </div>
         </div>
     </main>

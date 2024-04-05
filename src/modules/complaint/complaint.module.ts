@@ -16,6 +16,7 @@ import { ConfigModule } from '@nestjs/config';
         schema: ComplaintSchema
       }
     ]), UserModule, ConfigModule
-  ]
+  ],
+  exports: [ComplaintService]
 })
 export class ComplaintModule {}

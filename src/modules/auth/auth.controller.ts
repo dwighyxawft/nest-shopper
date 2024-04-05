@@ -13,6 +13,15 @@ export class AuthController {
     signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) response: Response) {
         return this.authService.createToken(signInDto.email, signInDto.password, response);
     }
+    @Post('/admin')
+    logIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) response: Response) {
+        return this.authService.adminToken(signInDto.email, signInDto.password, response);
+    }
+
+    @Post('/courier')
+    postIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) response: Response) {
+        return this.authService.courierToken(signInDto.email, signInDto.password, response);
+    }
 
     @Get("")
     @Render("login")
