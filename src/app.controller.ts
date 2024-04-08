@@ -60,7 +60,7 @@ export class AppController {
 
   // Authenticated user pages
   @Get("/shop/home")
-    renderHomePage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderHomePage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
       if(req.query.get){
         const get = req.query.get;
         return this.appService.renderHomePage(req.user["sub"], +get, res);
@@ -69,16 +69,16 @@ export class AppController {
     }
 
     @Get("/shop/product/:id")
-    renderProductPage(@Req() req: Request, @Param("id") id: string, @Res({passthrough: true}) res: Response){
+    renderProductPage(@Req() req: CustomRequest, @Param("id") id: string, @Res({passthrough: true}) res: Response){
       return this.appService.renderProductPage(req.user["sub"], id, res)
     }
 
     @Get("/shop/cart/")
-    renderCartPage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderCartPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
       return this.appService.renderCartPage(req.user["sub"], res)
     }
     @Get("/shop/group")
-    renderGroupPage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderGroupPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
       if(req.query.group){
         if(req.query.get){
           const get = req.query.get;
@@ -98,7 +98,7 @@ export class AppController {
     }
 
     @Get("/shop/category")
-    renderCategoryPage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderCategoryPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
       if(req.query.category){
         if(req.query.get){
           const get = req.query.get;
@@ -117,7 +117,7 @@ export class AppController {
     }
 
     @Get("/shop/order")
-    renderOrderPage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderOrderPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
         if(req.query.status && (req.query.status == "pending" || req.query.status == "completed" || req.query.status == "failed" || req.query.status == "delivered")){
           return this.appService.renderOrderPage(req.user["sub"], res, req.query.status)
         }else{
@@ -126,12 +126,12 @@ export class AppController {
     }
 
     @Get("/shop/order/:id")
-    renderDetailsPage(@Req() req: Request, @Res({passthrough: true}) res: Response, @Param("id") id: string){
+    renderDetailsPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response, @Param("id") id: string){
         return this.appService.renderDetailPage(req.user["sub"], id, res);
     }
 
     @Get("/shop/settings/")
-    renderSettingsPage(@Req() req: Request, @Res({passthrough: true}) res: Response){
+    renderSettingsPage(@Req() req: CustomRequest, @Res({passthrough: true}) res: Response){
         return this.appService.renderSettingsPage(req.user["sub"], res);
     }
 
